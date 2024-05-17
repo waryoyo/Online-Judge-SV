@@ -1,5 +1,6 @@
 package com.example.megumin.submission;
 
+import com.example.megumin.codeRunner.SourceCode;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,18 +8,34 @@ public class Submission {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
-    private String content;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private SourceCode sourceCode;
+    @Enumerated(EnumType.STRING)
+    private SubmissionStatus status;
+    private String output;
 
     public Long getId() {
         return id;
     }
 
-    public String getContent() {
-        return content;
+    public SourceCode getSourceCode() {
+        return sourceCode;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public SubmissionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SubmissionStatus status) {
+        this.status = status;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
     }
 }

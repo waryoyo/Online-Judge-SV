@@ -42,12 +42,15 @@ public class SubmissionService {
                 submissionRepository.save(submission);
 
                 String result = runSubmission(submission);
-                submission.setOutput(result);
+                if(result == null)
+                    submission.setStatus(SubmissionStatus.ERROR);
+                else{
+                    submission.setOutput(result);
+                    submission.setStatus(SubmissionStatus.SUCCESS);
+                }
 
-                submission.setStatus(SubmissionStatus.SUCCESS);
                 submissionRepository.save(submission);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,7 +90,7 @@ public class SubmissionService {
             return byteArrayOutputStream.toString();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 

@@ -25,7 +25,7 @@ public class SubmissionController {
     }
 
     @GetMapping("/{id}")
-    public Submission getSubmissionById(Long id) {
+    public Submission getSubmissionById(@PathVariable Long id) {
         return submissionService.getSubmissionById(id);
     }
 

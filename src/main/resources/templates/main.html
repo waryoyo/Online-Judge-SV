@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="../static/codemirror.js"></script>
+    <link href="../static/codemirror.css" rel="stylesheet" type="text/css" />
+    <script src="../static/clike.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Title</title>
+  </head>
+  <body>
+    <textarea id="editor">int main() { return 0; }</textarea>
+    <button class="mt-4 ml-4 border border-black p-2" onclick="sendToServer()">
+      Submit
+    </button>
+    <script>
+      let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: "text/x-c++src",
+        lineNumbers: true,
+      });
+
+      function sendToServer() {
+        let text = editor.getValue();
+        fetch("http://localhost:2000/api/judge", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: text }),
+        })
+          .then((response) => response.json())
+          .then((response) => console.log(JSON.stringify(response)));
+      }
+    </script>
+  </body>
+</html>

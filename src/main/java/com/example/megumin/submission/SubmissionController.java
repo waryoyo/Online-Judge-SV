@@ -8,8 +8,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/api/judge")
+@RequestMapping("/api/submission")
 public class SubmissionController {
     private final SubmissionService submissionService;
     private final CodeRunnerService codeRunnerService;

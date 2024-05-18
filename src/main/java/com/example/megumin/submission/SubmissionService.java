@@ -1,6 +1,7 @@
 package com.example.megumin.submission;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -11,6 +12,13 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -20,47 +28,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Service
 public class SubmissionService {
     private final SubmissionRepository submissionRepository;
-    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
-    private final BlockingQueue<Submission> submissionQueue = new LinkedBlockingQueue<>();
 
     @Autowired
     public SubmissionService(SubmissionRepository submissionRepository){
         this.submissionRepository = submissionRepository;
     }
-    @PostConstruct
-    public void init() {
-        for (int i = 0; i < 2; i++) {
-            executorService.submit(this::processSubmissions);
-        }
-    }
 
-    private void processSubmissions() {
-        while (true) {
-            try {
-                Submission submission = submissionQueue.take();
-                submission.setStatus(SubmissionStatus.RUNNING);
-                submissionRepository.save(submission);
-
-                String result = runSubmission(submission);
-                if(result == null)
-                    submission.setStatus(SubmissionStatus.ERROR);
-                else{
-                    submission.setOutput(result);
-                    submission.setStatus(SubmissionStatus.SUCCESS);
-                }
-
-                submissionRepository.save(submission);
-            } catch (InterruptedException e) {
-                break;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
     public Submission createSubmission(Submission submission) {
-        var submissionSaved = submissionRepository.save(submission);
-        submissionQueue.add(submissionSaved);
-        return submissionSaved;
+        return submissionRepository.save(submission);
     }
     public List<Submission> getAllSubmissions() {
         return submissionRepository.findAll();
@@ -70,28 +45,26 @@ public class SubmissionService {
     }
 
     public String runSubmission(Submission submission) {
-        try {
-            String[] commands = new String[2];
-            commands[0] = "g++ main.cpp -o main";
-            commands[1] = ".\\main";
+        try(var client = HttpClient.newHttpClient()){
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = objectMapper.writeValueAsString(submission.getSourceCode());
 
-            FileWriter fileWriter = new FileWriter("main.cpp");
-            fileWriter.write(submission.getSourceCode().getContent());
-            fileWriter.close();
+            var request = HttpRequest.newBuilder(
+                            URI.create("http://localhost:5010/judge"))
+                    .header("accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody,  StandardCharsets.UTF_8))
+                    .build();
 
-            DefaultExecutor executor = DefaultExecutor.builder().get();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Response status code: " + response.statusCode());
+            System.out.println("Response body: " + response.body());
 
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            executor.setStreamHandler(new PumpStreamHandler(byteArrayOutputStream));
 
-            executor.execute(CommandLine.parse(commands[0]));
-            executor.execute(CommandLine.parse(commands[1]));
-
-            return byteArrayOutputStream.toString();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             return null;
         }
+        return "";
     }
 
 }

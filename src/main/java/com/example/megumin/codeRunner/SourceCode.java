@@ -10,11 +10,9 @@ public class SourceCode {
     private Long id;
     @Column(nullable = false)
     private String content;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProgrammingLanguage language;
-
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Submission submission;

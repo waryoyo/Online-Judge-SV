@@ -31,6 +31,7 @@ public class SubmissionController {
 
     @PostMapping
     public Submission postSubmission(@RequestBody Submission submission) {
+        submissionService.runSubmission(submission);
         return submissionService.createSubmission(submission);
     }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script>
+    <title>Title</title>
+  </head>
+  <body>
+    <textarea id="editor">int main() { return 0; }</textarea>
+    <button class="mt-4 ml-4 border border-black p-2" onclick="sendToServer()">
+      Submit
+    </button>
+    <script>
+      let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: "text/x-c++src",
+        theme: "dracula",
+        lineNumbers: true,
+      });
+
+      function sendToServer() {
+        let text = editor.getValue();
+        fetch("/api/judge", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: text }),
+        })
+          .then((response) => response.text())
+          .then((text) => console.log(text));
+      }
+    </script>
+  </body>
+</html>

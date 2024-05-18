@@ -2,6 +2,7 @@ package com.example.megumin.submission;
 
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.PumpStreamHandler;
@@ -12,10 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 @Service
 public class SubmissionService {
@@ -31,6 +29,18 @@ public class SubmissionService {
     public void init() {
         for (int i = 0; i < 2; i++) {
             executorService.submit(this::processSubmissions);
+        }
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
         }
     }
 
@@ -89,9 +99,11 @@ public class SubmissionService {
 
             return byteArrayOutputStream.toString();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
+
     }
 
 }

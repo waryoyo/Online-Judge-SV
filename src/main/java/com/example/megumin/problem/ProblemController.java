@@ -19,6 +19,10 @@ public class ProblemController {
     public List<Problem> getAllProblems() {
         return problemService.getAllProblems();
     }
+    @GetMapping("/list")
+    public List<ProblemSimpleProjection> getAllProblemsList() {
+        return problemService.getAllProblemsList();
+    }
     @PostMapping
     public Problem postProblem(@RequestBody Problem problem) {
         System.out.println("hello");

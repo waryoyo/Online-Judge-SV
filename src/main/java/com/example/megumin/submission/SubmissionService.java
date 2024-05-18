@@ -7,6 +7,7 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -20,10 +21,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Map;
+import java.util.concurrent.*;
 
 @Service
 public class SubmissionService {
@@ -43,8 +42,11 @@ public class SubmissionService {
     public Submission getSubmissionById(long id) {
         return submissionRepository.findById(id).orElse(null);
     }
+    @Async
+    public void runSubmission(Submission submission) {
+        submission.setStatus(SubmissionStatus.RUNNING);
+        submissionRepository.save(submission);
 
-    public String runSubmission(Submission submission) {
         try(var client = HttpClient.newHttpClient()){
             ObjectMapper objectMapper = new ObjectMapper();
             String requestBody = objectMapper.writeValueAsString(submission.getSourceCode());
@@ -55,16 +57,32 @@ public class SubmissionService {
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody,  StandardCharsets.UTF_8))
                     .build();
+            CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+            responseFuture.thenApply(HttpResponse::body)
+                    .thenAccept(responseBody -> {
+                        try {
+                            // Parse the response body to an object
+                            Map<String, String> responseMap = objectMapper.readValue(responseBody, Map.class);
+                            String status = responseMap.get("status");
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Response status code: " + response.statusCode());
-            System.out.println("Response body: " + response.body());
+                            if(status.equals("SUCCESS"))
+                                submission.setStatus(SubmissionStatus.SUCCESS);
+                            else
+                                submission.setStatus(SubmissionStatus.ERROR);
 
+                            submissionRepository.save(submission);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    })
+                    .exceptionally(e -> {
+                        e.printStackTrace();
+                        return null;
+                    });
 
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
-        return "";
     }
 
 }

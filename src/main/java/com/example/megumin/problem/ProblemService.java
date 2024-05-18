@@ -19,6 +19,10 @@ public class ProblemService {
     public List<Problem> getAllProblems() {
         return new ArrayList<>(problemRepository.findAll());
     }
+    public List<ProblemSimpleProjection> getAllProblemsList() {
+        return problemRepository.findBy();
+    }
+
 
     public Problem getProblemById(Long id) {
         return problemRepository.findById(id).orElse(null);

@@ -30,7 +30,8 @@ public class SubmissionController {
 
     @PostMapping
     public Submission postSubmission(@RequestBody Submission submission) {
+        Submission submission1 = submissionService.createSubmission(submission);
         submissionService.runSubmission(submission);
-        return submissionService.createSubmission(submission);
+        return submission1;
     }
 }

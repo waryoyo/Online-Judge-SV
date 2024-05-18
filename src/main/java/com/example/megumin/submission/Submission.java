@@ -2,6 +2,8 @@ package com.example.megumin.submission;
 
 import com.example.megumin.codeRunner.SourceCode;
 import com.example.megumin.problem.Problem;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,9 +16,9 @@ public class Submission {
     private SourceCode sourceCode;
     @Enumerated(EnumType.STRING)
     private SubmissionStatus status;
-    private String output;
     @ManyToOne
-    @JoinColumn(name = "problem", nullable = false)
+    @JoinColumn(name = "problem_id", nullable = false)
+    @JsonBackReference
     private Problem problem;
 
     public Long getId() {
@@ -33,14 +35,6 @@ public class Submission {
 
     public void setStatus(SubmissionStatus status) {
         this.status = status;
-    }
-
-    public String getOutput() {
-        return output;
-    }
-
-    public void setOutput(String output) {
-        this.output = output;
     }
     public Problem getProblem() {
         return problem;

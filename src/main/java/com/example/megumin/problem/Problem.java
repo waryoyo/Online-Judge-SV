@@ -1,6 +1,7 @@
 package com.example.megumin.problem;
 
 import com.example.megumin.submission.Submission;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class Problem {
     @Column(nullable = false)
     private long timesSolved;
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Submission> submissions;
 
     public String getTitle() {

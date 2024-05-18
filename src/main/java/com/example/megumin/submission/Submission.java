@@ -1,9 +1,7 @@
 package com.example.megumin.submission;
 
-import com.example.megumin.codeRunner.SourceCode;
 import com.example.megumin.problem.Problem;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity

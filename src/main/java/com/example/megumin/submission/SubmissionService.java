@@ -1,18 +1,16 @@
 package com.example.megumin.submission;
 
 
+import com.example.megumin.submission.DTO.ProblemDTO;
+import com.example.megumin.submission.DTO.SourceCodeDTO;
+import com.example.megumin.submission.DTO.TestCaseDTO;
+import com.example.megumin.problem.Problem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -39,14 +37,41 @@ public class SubmissionService {
     public Submission getSubmissionById(long id) {
         return submissionRepository.findById(id).orElse(null);
     }
+    public ProblemDTO getProblemDTO(Submission submission){
+        Problem problem = submission.getProblem();
+
+        ProblemDTO problemDTO = new ProblemDTO();
+        SourceCodeDTO sourceCodeDTO = new SourceCodeDTO();
+
+        sourceCodeDTO.setContent(submission.getSourceCode().getContent());
+        sourceCodeDTO.setLanguage(submission.getSourceCode().getLanguage());
+        problemDTO.setSource_code(sourceCodeDTO);
+        problemDTO.setSubmission_id(submission.getId());
+        problemDTO.setTime_limit(problem.getTimeLimit());
+        problemDTO.setMemory_limit(problem.getMemoryLimit());
+
+        List<TestCaseDTO> testCaseDTOs = problem.getTestCases().stream()
+                .map(tc -> {
+                    TestCaseDTO dto = new TestCaseDTO();
+                    dto.setInput(tc.getInput());
+                    dto.setOutput(tc.getOutput());
+                    return dto;
+                })
+                .toList();
+
+        problemDTO.setTest_cases(testCaseDTOs);
+        return problemDTO;
+
+    }
     @Async
     public void runSubmission(Submission submission) {
         submission.setStatus(SubmissionStatus.RUNNING);
-        submissionRepository.save(submission);
+        Submission savedSubmission = submissionRepository.save(submission);
 
         try(var client = HttpClient.newHttpClient()){
+            ProblemDTO problemDTO = getProblemDTO(savedSubmission);
             ObjectMapper objectMapper = new ObjectMapper();
-            String requestBody = objectMapper.writeValueAsString(submission.getSourceCode());
+            String requestBody = objectMapper.writeValueAsString(problemDTO);
 
             var request = HttpRequest.newBuilder(
                             URI.create("http://localhost:5010/judge"))

@@ -32,6 +32,9 @@ public class Problem {
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Submission> submissions;
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<TestCase> testCases;
 
     public String getTitle() {
         return title;
@@ -103,5 +106,9 @@ public class Problem {
 
     public List<Submission> getSubmissions() {
         return submissions;
+    }
+
+    public List<TestCase> getTestCases() {
+        return testCases;
     }
 }

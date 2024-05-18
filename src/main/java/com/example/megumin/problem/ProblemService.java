@@ -1,7 +1,5 @@
 package com.example.megumin.problem;
 
-import com.example.megumin.problem.Problem;
-import com.example.megumin.submission.SubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +9,7 @@ import java.util.List;
 @Service
 public class ProblemService {
     private final ProblemRepository problemRepository;
+
     @Autowired
     public ProblemService(ProblemRepository problemRepository){
         this.problemRepository = problemRepository;

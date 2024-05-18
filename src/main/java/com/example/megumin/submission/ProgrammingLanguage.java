@@ -1,4 +1,4 @@
-package com.example.megumin.codeRunner;
+package com.example.megumin.submission;
 
 public enum ProgrammingLanguage {
     PYTHON,

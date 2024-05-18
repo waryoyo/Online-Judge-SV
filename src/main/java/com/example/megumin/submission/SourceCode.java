@@ -1,7 +1,5 @@
-package com.example.megumin.codeRunner;
+package com.example.megumin.submission;
 
-import com.example.megumin.codeRunner.ProgrammingLanguage;
-import com.example.megumin.submission.Submission;
 import jakarta.persistence.*;
 @Entity
 public class SourceCode {

@@ -34,15 +34,15 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO){
-        System.err.println("Logging in...1");
+//        System.err.println("Logging in...1");
         try {
-            System.out.println(loginDTO.getUsernameOrEmail());
-            System.out.println(loginDTO.getPassword());
-            System.out.println(passwordEncoder.encode(loginDTO.getPassword()));
-            System.out.println(passwordEncoder.matches(loginDTO.getPassword(), "$2a$10$g29Qf1wN8jpjaQmT3HwrauhitO29jrs5IZH0CK8h8fR1vp3BLXh92"));
+//            System.out.println(loginDTO.getUsernameOrEmail());
+//            System.out.println(loginDTO.getPassword());
+//            System.out.println(passwordEncoder.encode(loginDTO.getPassword()));
+//            System.out.println(passwordEncoder.matches(loginDTO.getPassword(), "$2a$10$g29Qf1wN8jpjaQmT3HwrauhitO29jrs5IZH0CK8h8fR1vp3BLXh92"));
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
-            System.err.println("Logging in...2");
+//            System.err.println("Logging in...2");
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
         } catch (Exception e) {

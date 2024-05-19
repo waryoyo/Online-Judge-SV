@@ -1,4 +1,4 @@
-package com.example.megumin.submission.DTO;
+package com.example.megumin.DTO;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

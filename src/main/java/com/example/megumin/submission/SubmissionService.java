@@ -1,9 +1,9 @@
 package com.example.megumin.submission;
 
 
-import com.example.megumin.submission.DTO.ProblemDTO;
-import com.example.megumin.submission.DTO.SourceCodeDTO;
-import com.example.megumin.submission.DTO.TestCaseDTO;
+import com.example.megumin.DTO.ProblemDTO;
+import com.example.megumin.DTO.SourceCodeDTO;
+import com.example.megumin.DTO.TestCaseDTO;
 import com.example.megumin.problem.Problem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

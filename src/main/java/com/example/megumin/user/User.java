@@ -70,4 +70,8 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup page</title>
-    <link rel="stylesheet" th:href="@{/css/authStyle.css}">
-</head>
-<body>
-<div class="container">
-    <div class="signup-box">
+    <link rel="stylesheet" th:href="@{/css/authStyle.css}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="signup-box">
         <h2>Sign Up</h2>
         <form th:action="@{/signup}" th:object="${signupDTO}" method="post">
-            <div class="input-box">
-                <input type="text" th:field="*{firstName}" required>
-                <label>First Name</label>
-            </div>
-            <div class="input-box">
-                <input type="text" th:field="*{lastName}" required>
-                <label>Last Name</label>
-            </div>
-            <div class="input-box">
-                <input type="email" th:field="*{email}" required>
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-                <input type="password" th:field="*{password}" required>
-                <label>Password</label>
-            </div>
-            <div class="input-box">
-                <input type="password" required>
-                <label>Confirm Password</label>
-            </div>
-            <button type="submit" class="btn">Create Account</button>
+          <div class="input-box">
+            <input type="text" th:field="*{firstName}" required />
+            <label>First Name</label>
+          </div>
+          <div class="input-box">
+            <input type="text" th:field="*{lastName}" required />
+            <label>Last Name</label>
+          </div>
+          <div class="input-box">
+            <input type="email" th:field="*{email}" required />
+            <label>Email</label>
+          </div>
+          <div class="input-box">
+            <input type="password" th:field="*{password}" required />
+            <label>Password</label>
+          </div>
+          <div class="input-box">
+            <input type="password" required />
+            <label>Confirm Password</label>
+          </div>
+          <button type="submit" class="btn">Create Account</button>
         </form>
+      </div>
+      <span
+        th:each="i: ${#numbers.sequence(0, 49)}"
+        th:style="'--i:' + ${i}"
+      ></span>
     </div>
-    <span th:each="i: ${#numbers.sequence(0, 49)}" th:style="'--i:' + ${i}"></span>
-</div>
-</body>
+  </body>
 </html>

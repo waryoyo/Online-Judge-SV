@@ -16,7 +16,7 @@
         <h2>Login</h2>
         <form th:action="@{/login}" method="post">
           <div class="input-box">
-            <input type="text" name="username" id="username" required />
+            <input type="email" name="username" id="username" required />
             <label>Email</label>
           </div>
           <div class="input-box">
@@ -32,8 +32,10 @@
           </div>
         </form>
       </div>
-      <span th:each="i: ${#numbers.sequence(0, 49)}" th:style="'--i:' + ${i}"></span>
-
+      <span
+        th:each="i: ${#numbers.sequence(0, 49)}"
+        th:style="'--i:' + ${i}"
+      ></span>
     </div>
   </body>
 </html>

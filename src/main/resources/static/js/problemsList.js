@@ -19,5 +19,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 problemsTableBody.appendChild(problemRow);
             });
         })
-        .catch(error => console.error("Error fetching problems:", error));
+        .catch(error => console.error("Error fetching problems:", error))
+         .then(() => fetch("/api/auth/user", {
+              credentials: 'same-origin'
+            }))
+            .then(response => response.text())
+            .then(textResponse => console.log(textResponse))
+
 });

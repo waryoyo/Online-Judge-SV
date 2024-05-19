@@ -2,6 +2,9 @@ package com.example.megumin;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.example.megumin.services.CustomUserDetailsService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +30,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
+
+import java.io.IOException;
 
 @Configuration
 @EnableMethodSecurity
@@ -54,10 +66,27 @@ public class SecurityConfig  {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        LogoutHandler customlogoutHandler =
+                (request, response, authentication) -> new SecurityContextLogoutHandler()
+                        .logout(request, response, authentication);
+
+        AuthenticationSuccessHandler customAuthenticationSuccessHandler  = new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                response.sendRedirect("/problems");
+            }
+        };
 
         return http
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .deleteCookies("auth", "JSESSIONID")
+//                        .addLogoutHandler(customlogoutHandler)
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
                 .rememberMe(me -> me.alwaysRemember(true)
@@ -70,6 +99,7 @@ public class SecurityConfig  {
                                 .requestMatchers("signup").permitAll()
                                 .requestMatchers("auth/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
+                                .requestMatchers( "/logout").authenticated()
                                 .anyRequest().authenticated()
 
 

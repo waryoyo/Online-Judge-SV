@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,10 +37,11 @@ public class AuthController {
     }
     @GetMapping("/login")
     public String getLoginPage() {
-        if (isAuthenticated()) {
-            return "redirect:/problems";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+//        if (!authentication.getName().equals("anonymousUser") || !authentication.isAuthenticated()) {
+//            return "redirect:/problems";
+//        }
         return "auth/login";
     }
     @GetMapping("/signup")
@@ -72,5 +74,11 @@ public class AuthController {
         userRepository.save(user);
         return "redirect:/login";
 
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+//        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/login";
     }
 }

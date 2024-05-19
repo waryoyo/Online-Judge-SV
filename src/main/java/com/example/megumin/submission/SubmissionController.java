@@ -30,7 +30,9 @@ public class SubmissionController {
 
     @PostMapping
     public Submission postSubmission(@RequestBody Submission submission) {
+        // TODO: This is probably why it stays RUNNING always, submission1 is the one being returned?
         Submission submission1 = submissionService.createSubmission(submission);
+        // Should it be submission1?
         submissionService.runSubmission(submission);
         return submission1;
     }

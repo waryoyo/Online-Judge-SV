@@ -1,0 +1,90 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  min-width: 600px;
+  color: #f0f0f0; /* White text */
+}
+
+table thead tr {
+  background-color: #006400; /* Dark green */
+  color: #f0f0f0; /* White text */
+  text-align: left;
+  font-weight: bold;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  border: 1px solid #f0f0f0; /* White border */
+}
+
+table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:nth-of-type(even) {
+  background-color: #2c2c2c;
+}
+
+table tbody tr:nth-of-type(odd) {
+  background-color: #1e1e1e;
+}
+
+table tbody tr:last-of-type {
+  border-bottom: 2px solid #006400; /* Dark green */
+}
+
+table tbody tr:hover {
+  background-color: #575757;
+}
+
+table tbody td a {
+  color: #00aaff;
+  text-decoration: none;
+}
+
+table tbody td a:hover {
+  text-decoration: underline;
+}
+
+table tbody td.easy {
+  color: #28a745;
+}
+
+table tbody td.medium {
+  color: #ffc107;
+}
+
+table tbody td.hard {
+  color: #dc3545;
+}
+
+/* New styles to match the green theme */
+.table-container {
+  background-color: #1b1b1b;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+table tbody td {
+  color: #f0f0f0; /* White text */
+}
+
+.table-header {
+  background-color: #006400; /* Dark green */
+  color: #f0f0f0; /* White text */
+}
+
+.table-row {
+  background-color: #1b1b1b;
+}
+
+.table-row:nth-of-type(even) {
+  background-color: #2e2e2e;
+}
+
+.table-row:hover {
+  background-color: #3e3e3e;
+}

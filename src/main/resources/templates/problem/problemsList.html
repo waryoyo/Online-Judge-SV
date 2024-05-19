@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="/css/problemsListStyle.css" />
+  </head>
+  <body>
+    <div th:fragment="content">
+      <h1>Problems</h1>
+      <table id="problems-list">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Difficulty</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Problems will be populated here by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    <script src="/js/problemsList.js"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="css/homeStyle.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <img src="/img/SolVerLogo.png" class="logo" width="150" height="80" />
+      </div>
+      <nav>
+        <ul>
+          <!--          <li><a th:href="@{/home}" class="active">Home</a></li>-->
+          <li><a th:href="@{/Problems}" class="active">Problem List</a></li>
+          <li><a th:href="@{/addProblem}">Add problem</a></li>
+        </ul>
+      </nav>
+      <button class="login-button">Login</button>
+    </header>
+    <div class="content">
+      <div th:replace="${pageContent}"></div>
+    </div>
+  </body>
+</html>

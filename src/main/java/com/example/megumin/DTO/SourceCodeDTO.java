@@ -1,6 +1,6 @@
 package com.example.megumin.DTO;
 
-import com.example.megumin.submission.ProgrammingLanguage;
+import com.example.megumin.models.ProgrammingLanguage;
 
 public class SourceCodeDTO {
     private String content;

@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Anta&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: black;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 35px;
+  background: linear-gradient(to right, #0c180c, rgb(14, 35, 14));
+  border-bottom: 8px solid #0f540f;
+}
+
+nav ul {
+  display: flex;
+  gap: 30px;
+}
+
+nav a {
+  color: #138913;
+  font-size: 20px;
+  transition: color 0.3s;
+  font-family: "Anta", sans-serif;
+  font-weight: 900;
+}
+
+nav a:hover,
+nav a.active {
+  color: #00ff00;
+}
+
+.content {
+  margin: 12px;
+}
+
+.login-button {
+  padding: 10px 20px;
+  border: 2px solid #138913;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: "Rubik", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.login-button:hover {
+  background-color: #00ff00;
+  color: #172b1b;
+}
+.problem-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}

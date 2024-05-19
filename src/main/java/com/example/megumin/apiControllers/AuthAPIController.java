@@ -21,17 +21,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthAPIController {
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private UserRepository userRepository;
-
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDTO){
-//        System.err.println("Logging in...1");
         try {
 //            System.out.println(loginDTO.getUsernameOrEmail());
 //            System.out.println(loginDTO.getPassword());
@@ -41,11 +37,13 @@ public class AuthAPIController {
                     loginDTO.getUsernameOrEmail(), loginDTO.getPassword()));
 //            System.err.println("Logging in...2");
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity<>("User DIDNT signed-in successfully!.", HttpStatus.BAD_GATEWAY);
+
     }
 
     @PostMapping("/signup")
@@ -75,5 +73,16 @@ public class AuthAPIController {
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<Object> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            return new ResponseEntity<>(authentication.getName(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
     }
 }

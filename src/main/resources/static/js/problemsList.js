@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+
     fetch("/api/problem/list")
         .then(response => response.json())
         .then(problems => {

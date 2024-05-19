@@ -1,5 +1,6 @@
 package com.example.megumin;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.example.megumin.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,10 +56,22 @@ public class SecurityConfig  {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
                                 .anyRequest().authenticated()
+
                 )
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .formLogin(formLogin -> formLogin
+                        .loginProcessingUrl("/api/auth/login")
+                        .defaultSuccessUrl("/problems")
+                        .permitAll()
+                )
+                .rememberMe(me -> me.alwaysRemember(true)
+                        .tokenValiditySeconds(30*5)
+                        .rememberMeCookieName("mouni")
+                        .key("somesecret")
+                )
+
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }

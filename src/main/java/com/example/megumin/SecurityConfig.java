@@ -62,11 +62,12 @@ public class SecurityConfig  {
                 )
                 .rememberMe(me -> me.alwaysRemember(true)
                         .tokenValiditySeconds(30*5)
-                        .rememberMeCookieName("mouni")
+                        .rememberMeCookieName("auth")
                         .key("somesecret")
                 )
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers("signup").permitAll()
                                 .requestMatchers("auth/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
                                 .anyRequest().authenticated()

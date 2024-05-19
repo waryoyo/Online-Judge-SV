@@ -1,7 +1,7 @@
 package com.example.megumin.apiControllers;
 
-import com.example.megumin.DTO.LoginDTO;
-import com.example.megumin.DTO.SignupDTO;
+import com.example.megumin.payloads.LoginDTO;
+import com.example.megumin.payloads.SignupDTO;
 import com.example.megumin.models.Role;
 import com.example.megumin.models.User;
 import com.example.megumin.repositories.UserRepository;

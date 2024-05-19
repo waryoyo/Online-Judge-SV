@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -39,6 +40,7 @@ public class SecurityConfig  {
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(
             UserDetailsService userDetailsService,
@@ -49,21 +51,13 @@ public class SecurityConfig  {
 
         return new ProviderManager(authenticationProvider);
     }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers("/login").permitAll()
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .anyRequest().authenticated()
-
-                )
                 .formLogin(formLogin -> formLogin
-                        .loginProcessingUrl("/api/auth/login")
-                        .defaultSuccessUrl("/problems")
+                        .loginPage("/login")
                         .permitAll()
                 )
                 .rememberMe(me -> me.alwaysRemember(true)
@@ -71,8 +65,16 @@ public class SecurityConfig  {
                         .rememberMeCookieName("mouni")
                         .key("somesecret")
                 )
+                .authorizeHttpRequests(authorize ->
+                        authorize
+                                .requestMatchers("auth/**").permitAll()
+                                .requestMatchers("/css/**").permitAll()
+                                .anyRequest().authenticated()
 
-                .httpBasic(Customizer.withDefaults())
+
+                )
+//                .csrf(AbstractHttpConfigurer::disable)
+
                 .build();
     }
 }

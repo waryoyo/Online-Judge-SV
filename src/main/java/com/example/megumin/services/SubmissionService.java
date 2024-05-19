@@ -1,9 +1,9 @@
 package com.example.megumin.services;
 
 
-import com.example.megumin.DTO.ProblemDTO;
-import com.example.megumin.DTO.SourceCodeDTO;
-import com.example.megumin.DTO.TestCaseDTO;
+import com.example.megumin.payloads.ProblemDTO;
+import com.example.megumin.payloads.SourceCodeDTO;
+import com.example.megumin.payloads.TestCaseDTO;
 import com.example.megumin.models.Problem;
 import com.example.megumin.models.Submission;
 import com.example.megumin.repositories.SubmissionRepository;

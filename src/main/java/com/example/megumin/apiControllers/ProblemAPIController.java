@@ -2,7 +2,7 @@ package com.example.megumin.apiControllers;
 
 import com.example.megumin.models.Problem;
 import com.example.megumin.services.ProblemService;
-import com.example.megumin.DTO.ProblemSimpleProjection;
+import com.example.megumin.payloads.ProblemSimpleProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

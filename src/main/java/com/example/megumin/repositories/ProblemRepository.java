@@ -1,7 +1,7 @@
 package com.example.megumin.repositories;
 
 import com.example.megumin.models.Problem;
-import com.example.megumin.DTO.ProblemSimpleProjection;
+import com.example.megumin.payloads.ProblemSimpleProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

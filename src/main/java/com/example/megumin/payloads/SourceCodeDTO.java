@@ -1,4 +1,4 @@
-package com.example.megumin.DTO;
+package com.example.megumin.payloads;
 
 import com.example.megumin.models.ProgrammingLanguage;
 

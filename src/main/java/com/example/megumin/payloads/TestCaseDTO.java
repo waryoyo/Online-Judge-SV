@@ -1,8 +1,4 @@
-package com.example.megumin.DTO;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.example.megumin.payloads;
 
 public class TestCaseDTO {
     private String input;

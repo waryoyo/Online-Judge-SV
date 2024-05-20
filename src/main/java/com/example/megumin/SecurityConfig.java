@@ -73,7 +73,7 @@ public class SecurityConfig  {
         AuthenticationSuccessHandler customAuthenticationSuccessHandler  = new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                response.sendRedirect("/problems");
+                response.sendRedirect("/problem");
             }
         };
 
@@ -84,9 +84,7 @@ public class SecurityConfig  {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .deleteCookies("auth", "JSESSIONID")
-//                        .addLogoutHandler(customlogoutHandler)
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutUrl("/logout")
                         .permitAll()
                 )
                 .rememberMe(me -> me.alwaysRemember(true)
@@ -96,15 +94,17 @@ public class SecurityConfig  {
                 )
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers("layout").permitAll()
                                 .requestMatchers("signup").permitAll()
                                 .requestMatchers("auth/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
+                                .requestMatchers("/problem/").permitAll()
                                 .requestMatchers( "/logout").authenticated()
                                 .anyRequest().authenticated()
 
 
                 )
-//                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
 
                 .build();
     }

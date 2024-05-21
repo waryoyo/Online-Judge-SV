@@ -1,29 +1,25 @@
 .problem-container {
-  text-align: center;
-  max-width: 1500px;
-  min-width: 1000px;
-  min-height: 500px;
-  padding: 28px;
-  border: 1px solid #00ff00;
-  background-color: #1a1a1a;
-  display: flex;
-  align-content: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  row-gap: 3%;
-  border-radius: 22px;
-}
+  background: linear-gradient(to right, #0c180c, rgb(14, 35, 14));
+  color: #30b230;
+  padding: 50px;
+  border: 2px solid green;
+  max-width: 1400px;
 
+  border-radius: 10px;
+}
 .problem-title {
+  font-family: "Anta", sans-serif;
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #00ff00;
+  text-align: center;
 }
-
 .problem-meta {
   font-size: 16px;
   color: #00ff00;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .second-container {
@@ -32,6 +28,9 @@
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 5%;
+  font-family: "Rubik", sans-serif;
+  font-weight: 900;
+  font-style: normal;
 }
 
 .problem-statement {
@@ -39,29 +38,62 @@
   line-height: 1.5;
   width: 50%;
   box-sizing: border-box;
-  text-align: start;
+}
+table {
+  margin: 0;
+  border-collapse: collapse;
+  width: 400px;
+  background-color: black;
 }
 
-.editor {
-  width: 50%;
-  box-sizing: border-box;
-  height: auto;
+thead th {
+  background-color: #0a7222;
+  color: black;
+  text-align: left;
+  font-weight: bold;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #338445;
+  font-family: "Rubik", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  color: #8cc199;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: black;
+}
+
+caption {
+  padding: 10px;
+  font-weight: bold;
+  text-align: left;
+  color: #138913;
 }
 
 .CodeMirror {
   text-align: left !important;
+  font-size: large;
+  width: 50%;
+  box-sizing: border-box;
+  height: 500px;
 }
 
 .green-button {
-  padding: 10px 20px;
+  padding: 15px 40px;
   border: 2px solid #138913;
   background: none;
-  color: #fff;
-  margin: 0 35%;
+  color: #3b9350;
+  margin: 0 auto;
+  display: block;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   font-family: "Rubik", sans-serif;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 900;
   font-style: normal;
 }
 

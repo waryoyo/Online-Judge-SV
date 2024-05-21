@@ -39,7 +39,8 @@ public class ProblemController {
         return "layout";
     }
     @PostMapping("/addProblem")
-    public Problem postProblem(@ModelAttribute("problem") Problem problem, Model model) {
-        return problemService.createProblem(problem);
+    public String postProblem(@ModelAttribute("problem") Problem problem, Model model) {
+        problemService.createProblem(problem);
+        return "redirect:/problem/list";
     }
 }

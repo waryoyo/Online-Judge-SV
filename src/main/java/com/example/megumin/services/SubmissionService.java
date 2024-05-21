@@ -8,10 +8,13 @@ import com.example.megumin.models.Problem;
 import com.example.megumin.models.Submission;
 import com.example.megumin.repositories.SubmissionRepository;
 import com.example.megumin.models.SubmissionStatus;
+import com.example.megumin.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -24,6 +27,8 @@ import java.util.concurrent.*;
 
 @Service
 public class SubmissionService {
+    @Autowired
+    private UserRepository userRepository;
     private final SubmissionRepository submissionRepository;
 
     @Autowired
@@ -32,6 +37,12 @@ public class SubmissionService {
     }
 
     public Submission createSubmission(Submission submission) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            submission.setUser(userRepository.findByEmail(authentication.getName()).orElse(null));
+        } else {
+            submission.setUser(null);
+        }
         return submissionRepository.save(submission);
     }
     public List<Submission> getAllSubmissions() {
@@ -100,14 +111,14 @@ public class SubmissionService {
                             // Parse the response body to an object
                             JsonNode jsonNode = objectMapper.readTree(responseBody);
                             String submissionID = jsonNode.get("submission_id").asText();
-                            JsonNode verdicts = jsonNode.get("test_verdicts");
+                            JsonNode verdicts = jsonNode.get("tests_verdicts");
                             for (JsonNode node : verdicts) {
                                 String status = node.get("verdict").asText();
                                 if (status.equals("WA")) wrongAnswer = true;
                                 if (status.equals("TLE")) timeLimitExceeded = true;
                                 if (status.equals("MLE")) memoryLimitExceeded = true;
                                 if (status.equals("ERUN")) runTimeError = true;
-                                if (status.equals("ECOM")) systemError = true;
+                                if (status.equals("ECOM")) compilationError = true;
                                 if (status.equals("ESYS")) systemError = true;
                                 double runTime = node.get("run_time").asDouble();
                                 double memoryUsed = node.get("memory_used").asDouble();

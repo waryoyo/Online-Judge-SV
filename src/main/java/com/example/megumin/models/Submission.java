@@ -15,12 +15,12 @@ public class Submission {
     private SubmissionStatus status;
     @ManyToOne
     @JoinColumn(name = "problem_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "problemsSub")
     private Problem problem;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "submissions")
     private User user;
 
     private Double runTime;
@@ -55,5 +55,17 @@ public class Submission {
     }
     public Double getMemoryUsed() {
         return this.memoryUsed;
+    }
+
+    public void setSourceCode(SourceCode sourceCode) {
+        this.sourceCode = sourceCode;
+    }
+
+    public void setProblem(Problem problem) {
+        this.problem = problem;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -30,14 +30,14 @@ public class Problem {
     @Column(nullable = false)
     private long timesSolved;
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference(value = "problemsSub")
     private List<Submission> submissions;
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<TestCase> testCases;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("problems")
     private User user;
 
     public String getTitle() {

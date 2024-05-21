@@ -25,7 +25,7 @@ public class ProblemAPIController {
     public List<ProblemSimpleProjection> getAllProblemsList() {
         return problemService.getAllProblemsList();
     }
-    @PostMapping
+
     public Problem postProblem(@RequestBody Problem problem) {
         return problemService.createProblem(problem);
     }

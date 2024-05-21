@@ -40,6 +40,7 @@ import org.springframework.security.web.server.authentication.logout.WebSessionS
 import java.io.IOException;
 
 @Configuration
+@EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig  {
 
@@ -75,6 +76,7 @@ public class SecurityConfig  {
         };
 
         return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .successHandler(customAuthenticationSuccessHandler)
@@ -85,12 +87,14 @@ public class SecurityConfig  {
                         .permitAll()
                 )
                 .rememberMe(me -> me.alwaysRemember(true)
-                        .tokenValiditySeconds(30*5)
+                        .tokenValiditySeconds(30*50)
                         .rememberMeCookieName("auth")
                         .key("somesecret")
                 )
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/submission/**").permitAll()
                                 .requestMatchers("layout").permitAll()
                                 .requestMatchers("signup").permitAll()
                                 .requestMatchers("auth/**").permitAll()
@@ -101,8 +105,9 @@ public class SecurityConfig  {
 
 
 
+                )  .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .csrf(AbstractHttpConfigurer::disable)
 
                 .build();
     }

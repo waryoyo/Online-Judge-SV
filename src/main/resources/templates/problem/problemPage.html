@@ -13,13 +13,14 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css"
     />
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script>
   </head>
   <body>
     <div class="problem-container">
-      <div class="problem-title" th:text="${problem.title}">Problem Title</div>
+      <div class="problem-title" th:text="${problem.title}">
+        A. Boy or Girl
+      </div>
       <div class="problem-meta">
         <span th:text="${problem.difficulty}">Difficulty</span> |
         <span th:text="${problem.language}">Language</span> |
@@ -29,13 +30,55 @@
       </div>
 
       <div class="second-container">
-        <div class="problem-statement" th:utext="${problem.statement}">
-          Problem Statement
+        <div class="problem-statement" >
+          <p th:utext="${problem.statement}">Those days, many boys use beautiful girls' photos as avatars in forums. So it is pretty hard to tell the gender of a user at the first glance. Last year, our hero went to a forum and had a nice chat with a beauty (he thought so). After that they talked very often and eventually they became a couple in the network.
+
+            But yesterday, he came to see "her" in the real world and found out "she" is actually a very strong man! Our hero is very sad and he is too tired to love again now. So he came up with a way to recognize users' genders by their user names.
+            
+            This is his method: if the number of distinct characters in one's user name is odd, then he is a male, otherwise she is a female. You are given the string that denotes the user name, please help our hero to determine the gender of this user by his method.
+          </p>
+          <!-- <br>
+          <h3 style="font-weight: bold;">Input</h3>
+          <p>The first line contains a non-empty string, that contains only lowercase English letters — the user name. This string contains at most 100 letters.</p>
+          <h3 style="font-weight: bold;">Output</h3>
+          <p>If it is a female by our hero's method, print "CHAT WITH HER!" (without the quotes), otherwise, print "IGNORE HIM!" (without the quotes).</p>
+          <br> -->
+          <!-- <table>
+            <caption><h3 style="font-weight: bold; text-align: left; color: #138913;">Examples</h3></caption>
+            <thead>
+              <tr>
+                  <th>Input</th>
+                  <th>Output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>wjmzbmr</td>
+                <td>CHAT WITH HER!</td>
+              </tr>
+              <tr>
+                  <td>xiaodao</td>
+                  <td>IGNORE HIM!</td>
+              </tr>
+            </tbody>
+        </table> -->
+
         </div>
-        <textarea class="editor" id="editor">int main() { return 0; }</textarea>
+
+        <textarea  id="editor">
+int main() { return 0; }</textarea
+        >
       </div>
-      <button class="green-button">Submit</button>
+
+      <button class="green-button" onclick="sendSubmission()">Submit</button>
+
     </div>
+
+    
+    <script src="problem.js"></script>
+  </div>
+
+</body>
     <script src="/js/problem.js"></script>
   </body>
 </html>

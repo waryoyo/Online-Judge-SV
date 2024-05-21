@@ -3,8 +3,8 @@
   color: #30b230;
   padding: 50px;
   border: 2px solid green;
-  max-width: 1400px;
-
+  max-width: 80%;
+  min-width: 60%;
   border-radius: 10px;
 }
 .problem-title {

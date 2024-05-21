@@ -9,7 +9,12 @@ public class HomeController {
 
     @RequestMapping("/")
     public String root() {
-        return "redirect:/problem";
+        return "redirect:/home";
+    }
+    @RequestMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("pageContent", "home");
+        return "layout";
     }
 
 

@@ -46,6 +46,7 @@ nav a.active {
   justify-content: center;
   align-items: center;
   /* height: 90%; */
+  margin: 3%;
   padding-top: 5%;
 }
 

@@ -14,7 +14,7 @@ public class Problem {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "longtext")
     private String statement;
     @Column(nullable = false)
     private String language;

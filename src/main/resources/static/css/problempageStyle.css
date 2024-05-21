@@ -13,35 +13,45 @@
   row-gap: 3%;
   border-radius: 22px;
 }
+
 .problem-title {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 10px;
 }
+
 .problem-meta {
   font-size: 16px;
   color: #00ff00;
   margin-bottom: 20px;
 }
-.editor {
-  height: auto;
-}
-.CodeMirror {
-  text-align: left !important;
-}
+
 .second-container {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  column-gap: 25%;
+  justify-content: space-between;
   margin-bottom: 5%;
-  justify-content: flex-start;
 }
 
 .problem-statement {
   font-size: 18px;
   line-height: 1.5;
+  width: 50%;
+  box-sizing: border-box;
+  text-align: start;
 }
+
+.editor {
+  width: 50%;
+  box-sizing: border-box;
+  height: auto;
+}
+
+.CodeMirror {
+  text-align: left !important;
+}
+
 .green-button {
   padding: 10px 20px;
   border: 2px solid #138913;

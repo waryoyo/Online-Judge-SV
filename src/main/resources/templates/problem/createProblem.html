@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <title>Create Problem</title>
@@ -45,12 +45,12 @@
   <body>
     <div class="container">
       <h2>Create Problem</h2>
-      <form id="problemForm">
+      <form th:action="@{/problem/addProblem}" method="post" id="problemForm">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required />
 
         <label for="statement">Statement:</label>
-        <textarea id="statement" name="statement" required></textarea>
+        <textarea id="statement" name="statement"></textarea>
 
         <label for="language">Language:</label>
         <input type="text" id="language" name="language" required />
@@ -68,9 +68,6 @@
         <label for="memoryLimit">Memory Limit (KB):</label>
         <input type="number" id="memoryLimit" name="memoryLimit" required />
 
-        <label for="timesSolved">Times Solved:</label>
-        <input type="number" id="timesSolved" name="timesSolved" required />
-
         <button type="submit">Create Problem</button>
       </form>
     </div>
@@ -81,29 +78,38 @@
         element: document.getElementById("statement"),
       });
 
-      document
-        .getElementById("problemForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          var formData = new FormData(this);
-          formData.set("statement", easyMDE.value());
+      // document
+      //   .getElementById("problemForm")
+      //   .addEventListener("submit", function (e) {
+      //     console.log("form submit");
+      //     e.preventDefault();
+      //     var formData = new FormData(this);
+      //     formData.set("statement", easyMDE.value());
 
-          fetch("/api/problem", {
-            method: "POST",
-            body: formData,
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.success) {
-                alert("Problem created successfully!");
-                this.reset();
-                easyMDE.value("");
-              } else {
-                alert("An error occurred. Please try again.");
-              }
-            })
-            .catch((error) => console.error("Error:", error));
-        });
+      //     let object = {};
+      //     formData.forEach((value, key) => (object[key] = value));
+      //     var jsonObject = JSON.stringify(object);
+
+      //     fetch("/api/problem", {
+      //       method: "POST",
+      //       body: jsonObject,
+      //       headers: {
+      //         Accept: "application/json",
+      //         "Content-Type": "application/json",
+      //       },
+      //     })
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         if (data.success) {
+      //           alert("Problem created successfully!");
+      //           this.reset();
+      //           easyMDE.value("");
+      //         } else {
+      //           alert("An error occurred. Please try again.");
+      //         }
+      //       })
+      //       .catch((error) => console.error("Error:", error));
+      //   });
     </script>
   </body>
 </html>

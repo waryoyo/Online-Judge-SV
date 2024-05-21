@@ -66,9 +66,6 @@ public class SecurityConfig  {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        LogoutHandler customlogoutHandler =
-                (request, response, authentication) -> new SecurityContextLogoutHandler()
-                        .logout(request, response, authentication);
 
         AuthenticationSuccessHandler customAuthenticationSuccessHandler  = new AuthenticationSuccessHandler() {
             @Override
@@ -101,6 +98,7 @@ public class SecurityConfig  {
                                 .requestMatchers("/problem/").permitAll()
                                 .requestMatchers( "/logout").authenticated()
                                 .anyRequest().authenticated()
+
 
 
                 )

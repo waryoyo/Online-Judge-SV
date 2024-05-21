@@ -1,19 +1,21 @@
 package com.example.megumin.controllers;
 
 import com.example.megumin.models.Problem;
-import com.example.megumin.repositories.ProblemRepository;
+import com.example.megumin.services.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/problem")
 public class ProblemController {
+    private final ProblemService problemService;
     @Autowired
-    private ProblemRepository problemRepository;
+    public ProblemController(ProblemService problemService) {
+        this.problemService = problemService;
+    }
+
 
     @GetMapping("/**")
     public String getProblemsListPage() {
@@ -26,16 +28,18 @@ public class ProblemController {
     }
     @GetMapping("/{id}")
     public String getProblemPage(@PathVariable Long id, Model model) {
-        Problem problem = problemRepository.findById(id).orElseThrow(null);
+        Problem problem = problemService.getProblemById(id);
         model.addAttribute("problem", problem);
         model.addAttribute("pageContent", "problem/problemPage");
-//        return "problem-details";
         return "layout";
     }
     @GetMapping("/addProblem")
     public String addProblemPage(Model model) {
         model.addAttribute("pageContent", "problem/createProblem");
-//        return "problem-details";
         return "layout";
+    }
+    @PostMapping("/addProblem")
+    public Problem postProblem(@ModelAttribute("problem") Problem problem, Model model) {
+        return problemService.createProblem(problem);
     }
 }

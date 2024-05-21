@@ -32,4 +32,10 @@ public class ProblemController {
 //        return "problem-details";
         return "layout";
     }
+    @GetMapping("/addProblem")
+    public String addProblemPage(Model model) {
+        model.addAttribute("pageContent", "problem/createProblem");
+//        return "problem-details";
+        return "layout";
+    }
 }

@@ -23,6 +23,9 @@ public class Submission {
     @JsonBackReference
     private User user;
 
+    private Double runTime;
+    private Double memoryUsed;
+
     public Long getId() {
         return id;
     }
@@ -40,5 +43,17 @@ public class Submission {
     }
     public Problem getProblem() {
         return problem;
+    }
+    public void setRunTime(Double runTime) {
+        this.runTime = runTime;
+    }
+    public void setMemoryUsed(Double memoryUsed) {
+        this.memoryUsed = memoryUsed;
+    }
+    public Double getRunTime() {
+        return this.runTime;
+    }
+    public Double getMemoryUsed() {
+        return this.memoryUsed;
     }
 }

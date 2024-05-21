@@ -1,7 +1,13 @@
 package com.example.megumin.models;
 
 public enum SubmissionStatus {
-    ERROR,
     RUNNING,
-    SUCCESS
+    AC,
+    WA,
+    TLE,
+    MLE,
+    ERUN,
+    ECOM,
+    ESYS
+
 }

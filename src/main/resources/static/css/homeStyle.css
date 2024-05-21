@@ -10,6 +10,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: black;
+  color: white;
 }
 
 header {
@@ -40,7 +41,12 @@ nav a.active {
 }
 
 .content {
-  margin: 12px;
+  display: flex;
+  /* margin: 5% 10%; */
+  justify-content: center;
+  align-items: center;
+  /* height: 90%; */
+  padding-top: 5%;
 }
 
 .login-button {

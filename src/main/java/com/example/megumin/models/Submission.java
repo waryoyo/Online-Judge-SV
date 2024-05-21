@@ -18,6 +18,11 @@ public class Submission {
     @JsonBackReference
     private Problem problem;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
+    private User user;
+
     public Long getId() {
         return id;
     }

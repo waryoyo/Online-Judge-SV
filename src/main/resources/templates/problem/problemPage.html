@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Problem Details</title>
+    <link rel="stylesheet" th:href="@{/css/problempageStyle.css}" />
 
-</body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script>
+  </head>
+  <body>
+    <div class="problem-container">
+      <div class="problem-title" th:text="${problem.title}">Problem Title</div>
+      <div class="problem-meta">
+        <span th:text="${problem.difficulty}">Difficulty</span> |
+        <span th:text="${problem.language}">Language</span> |
+        <span th:text="${#temporals.format(problem.date, 'yyyy-MM-dd')}"
+          >Date</span
+        >
+      </div>
+
+      <div class="second-container">
+        <div class="problem-statement" th:utext="${problem.statement}">
+          Problem Statement
+        </div>
+        <textarea class="editor" id="editor">
+          int main() { return 0; }</textarea
+        >
+      </div>
+      <button class="green-button">Submit</button>
+    </div>
+    <script src="/js/problem.js"></script>
+  </body>
 </html>

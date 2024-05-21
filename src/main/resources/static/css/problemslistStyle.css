@@ -16,6 +16,11 @@ table thead tr {
 
 table th,
 table td {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  cursor: pointer;
   padding: 12px 15px;
   border: 1px solid #f0f0f0; /* White border */
 }

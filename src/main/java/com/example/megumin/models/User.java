@@ -1,6 +1,10 @@
 package com.example.megumin.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
 public class User {
     @Id
@@ -14,6 +18,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean enabled;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Submission> submissions;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Problem> problems;
 
     public Long getId() {
         return id;

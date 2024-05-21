@@ -27,7 +27,6 @@ public class ProblemAPIController {
     }
     @PostMapping
     public Problem postProblem(@RequestBody Problem problem) {
-        System.out.println("hello");
         return problemService.createProblem(problem);
     }
 

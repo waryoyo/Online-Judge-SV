@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +25,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Problem> problems;
+    public User() {
+    }
+    public User(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -84,4 +90,5 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

@@ -115,4 +115,12 @@ public class Problem {
     public List<TestCase> getTestCases() {
         return testCases;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

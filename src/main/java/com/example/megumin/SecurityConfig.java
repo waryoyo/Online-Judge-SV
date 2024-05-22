@@ -94,6 +94,8 @@ public class SecurityConfig  {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/problem/**").permitAll()
+
                                 .requestMatchers(HttpMethod.POST,"/api/submission/**").permitAll()
                                 .requestMatchers("layout").permitAll()
                                 .requestMatchers("signup").permitAll()

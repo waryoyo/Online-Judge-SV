@@ -1,0 +1,75 @@
+.container {
+  background: linear-gradient(to right, #0c180c, rgb(14, 35, 14));
+  color: #138913;
+  padding: 50px;
+  border: 2px solid green;
+  border-radius: 10px;
+  min-width: 70%;
+}
+
+.container h2 {
+  font-family: "Anta", sans-serif;
+  font-weight: 900;
+  color: #00ff00;
+  text-align: center;
+}
+.input-box {
+  position: relative;
+  margin: 25px 20px;
+}
+.input-box label {
+  margin-top: 0.5rem;
+  font-size: large;
+  font-weight: bold;
+  color: #30b230;
+  font-family: "Rubik", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.input-box input,
+.input-box select {
+  width: 30%;
+  height: 30px;
+  background: black;
+  border: 2px solid #138913;
+  outline: none;
+  border-radius: 40px;
+  font-size: 1em;
+  color: #1bb71b;
+  padding: 0 20px;
+  margin: 20px 60px;
+}
+.input-box input:focus,
+.input-box input:valid {
+  border-color: #00ff00;
+}
+
+.container textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.container button {
+  border: 2px solid #138913;
+  background: none;
+  color: #3b9350;
+  margin: 10px 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: "Rubik", sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  font-style: normal;
+}
+.create-button {
+  padding: 15px 50px;
+}
+.create-button button:hover {
+  background-color: #00ff00;
+  color: #19361f;
+}
+.container button:hover {
+  background-color: #00ff00;
+  color: #19361f;
+}

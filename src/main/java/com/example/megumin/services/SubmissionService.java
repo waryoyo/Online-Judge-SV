@@ -1,8 +1,10 @@
 package com.example.megumin.services;
 
 
+import com.example.megumin.models.User;
 import com.example.megumin.payloads.ProblemDTO;
 import com.example.megumin.payloads.SourceCodeDTO;
+import com.example.megumin.payloads.SubmissionDTO;
 import com.example.megumin.payloads.TestCaseDTO;
 import com.example.megumin.models.Problem;
 import com.example.megumin.models.Submission;
@@ -24,6 +26,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SubmissionService {
@@ -44,6 +47,23 @@ public class SubmissionService {
             submission.setUser(null);
         }
         return submissionRepository.save(submission);
+    }
+
+    public List<SubmissionDTO> getUserSubmissions() {
+        User user;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            user = userRepository.findByEmail(authentication.getName()).orElse(null);
+        } else {
+            user = null;
+        }
+        if (user != null) {
+            List<Submission> submissions = submissionRepository.findByUser(user);
+            return submissions.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
     public List<Submission> getAllSubmissions() {
         return submissionRepository.findAll();
@@ -148,5 +168,7 @@ public class SubmissionService {
             e.printStackTrace();
         }
     }
-
+    private SubmissionDTO convertToDTO(Submission submission)   {
+        return new SubmissionDTO(submission.getProblem(), submission.getStatus());
+    }
 }

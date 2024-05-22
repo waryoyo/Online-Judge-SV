@@ -68,4 +68,5 @@ public class Submission {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

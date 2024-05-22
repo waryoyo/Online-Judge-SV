@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" th:href="@{/css/problemsListStyle.css}" />
+  </head>
+  <body>
+    <div th:fragment="content">
+      <h1>submissions</h1>
+      <table id="submissions-list">
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- submissions will be populated here by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    <script src="/js/submissionsList.js"></script>
+  </body>
+</html>

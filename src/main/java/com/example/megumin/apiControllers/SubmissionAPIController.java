@@ -1,6 +1,8 @@
 package com.example.megumin.apiControllers;
 
+import com.example.megumin.models.Problem;
 import com.example.megumin.models.Submission;
+import com.example.megumin.payloads.SubmissionDTO;
 import com.example.megumin.services.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,10 @@ public class SubmissionAPIController {
         return submissionService.getSubmissionById(id);
     }
 
+    @GetMapping("/list")
+    public List<SubmissionDTO> getAllSubmissionsUser() {
+        return submissionService.getUserSubmissions();
+    }
     @PostMapping
     public Submission postSubmission(@RequestBody Submission submission) {
 

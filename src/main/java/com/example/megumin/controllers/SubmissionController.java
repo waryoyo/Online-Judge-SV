@@ -4,10 +4,8 @@ import com.example.megumin.models.Submission;
 import com.example.megumin.services.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/submission")
@@ -18,7 +16,11 @@ public class SubmissionController {
     public SubmissionController(SubmissionService submissionService) {
         this.submissionService = submissionService;
     }
-
+    @GetMapping("/list")
+    public String postSubmission(Model model) {
+        model.addAttribute("pageContent", "submissionslist");
+        return "layout";
+    }
     @PostMapping
     public Submission postSubmission(@ModelAttribute("submission") Submission submission) {
         Submission submission1 = submissionService.createSubmission(submission);
